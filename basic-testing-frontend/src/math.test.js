@@ -1,79 +1,83 @@
 // import "test" or "it" from vitest
 
-import { it, expect } from "vitest";
+import { it, expect, describe } from "vitest";
 
 import { add } from "./math";
 
-// it or test expects 2 arguments:  a string describing the test, and a function with the test
 
-it("should summarize all number values in an array", () => {
-    // Arrange, Act, Assert
 
-    //Arrange
-    const numbers = [1, 2, 3];
+describe("add()", () => {
+    // it or test expects 2 arguments:  a string describing the test, and a function with the test
 
-    //Act
-    const result = add(numbers);
+    it("should summarize all number values in an array", () => {
+        // Arrange, Act, Assert
 
-    //Assert (here we are setting the expected value dynamically)
-    const expectedResult = numbers.reduce(
-        (prevValue, curValue) => prevValue + curValue,
-        0
-    );
-    expect(result).toBe(expectedResult);
-});
+        //Arrange
+        const numbers = [1, 2, 3];
 
-it("should yield NaN if at least one invalid number is provided", () => {
-    const inputs = ["invalid", 1];
+        //Act
+        const result = add(numbers);
 
-    const result = add(inputs);
+        //Assert (here we are setting the expected value dynamically)
+        const expectedResult = numbers.reduce(
+            (prevValue, curValue) => prevValue + curValue,
+            0
+        );
+        expect(result).toBe(expectedResult);
+    });
 
-    expect(result).toBeNaN();
-});
+    it("should yield NaN if at least one invalid number is provided", () => {
+        const inputs = ["invalid", 1];
 
-it("should yield a correct sum if an array of numeric string values is provided", () => {
-    const numbers = ["1", "2"];
+        const result = add(inputs);
 
-    const result = add(numbers);
+        expect(result).toBeNaN();
+    });
 
-    const expectedResult = numbers.reduce(
-        (prevValue, curValue) => +prevValue + +curValue,
-        0
-    );
-    expect(result).toBe(expectedResult);
-});
+    it("should yield a correct sum if an array of numeric string values is provided", () => {
+        const numbers = ["1", "2"];
 
-it("should yield 0 if an empty array is provided", () => {
-    const numbers = [];
+        const result = add(numbers);
 
-    const result = add(numbers);
+        const expectedResult = numbers.reduce(
+            (prevValue, curValue) => +prevValue + +curValue,
+            0
+        );
+        expect(result).toBe(expectedResult);
+    });
 
-    expect(result).toBe(0);
-});
+    it("should yield 0 if an empty array is provided", () => {
+        const numbers = [];
 
-it("should throw an error if no value is passed into the function", () => {
-    // try and catch
+        const result = add(numbers);
 
-    // try {
-    //     const result = add();
-    // } catch (error) {
-    //     expect(error).toBeDefined();
-    // }
+        expect(result).toBe(0);
+    });
 
-    const resultFn = () => {
-        add();
-    };
-    expect(resultFn).toThrow(/is not iterable/);
-});
+    it("should throw an error if no value is passed into the function", () => {
+        // try and catch
 
-it("should throw an error if provided with multiple arguments instead of an array", () => {
-    const num1 = 1;
-    const num2 = 2;
+        // try {
+        //     const result = add();
+        // } catch (error) {
+        //     expect(error).toBeDefined();
+        // }
 
-    const resultFn = () => {
-        add(num1, num2);
-    };
+        const resultFn = () => {
+            add();
+        };
+        expect(resultFn).toThrow(/is not iterable/);
+    });
 
-    //add regular expression to check for specific error to contain passed value
-    expect(resultFn).toThrow(/is not iterable/);
+    it("should throw an error if provided with multiple arguments instead of an array", () => {
+        const num1 = 1;
+        const num2 = 2;
+
+        const resultFn = () => {
+            add(num1, num2);
+        };
+
+        //add regular expression to check for specific error to contain passed value
+        expect(resultFn).toThrow(/is not iterable/);
+    });
 });

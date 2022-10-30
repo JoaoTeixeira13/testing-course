@@ -1,67 +1,73 @@
-import { it, expect } from "vitest";
+import { it, expect, describe } from "vitest";
 
 import { validateStringNotEmpty, validateNumber } from "./validation";
 
-it("should throw an error if an empty value is passed as an argument", () => {
-    const input = "";
+//describe organizes tests into suites
 
-    const resultFn = () => {
-        validateStringNotEmpty(input);
-    };
+describe("validateStringNotEmpty()", () => {
+    it("should throw an error if an empty value is passed as an argument", () => {
+        const input = "";
 
-    expect(resultFn).toThrow(/Invalid input - must not be empty./);
+        const resultFn = () => {
+            validateStringNotEmpty(input);
+        };
+
+        expect(resultFn).toThrow(/Invalid input - must not be empty./);
+    });
+
+    it("should return undefined if a valid input is passed as an argument", () => {
+        const input = "1";
+
+        const result = validateStringNotEmpty(input);
+
+        expect(result).toBeUndefined();
+    });
+
+    it("should not throw an error if a valid input is passed as an argument", () => {
+        const input = "1";
+
+        const resultFn = () => {
+            validateStringNotEmpty(input);
+        };
+
+        expect(resultFn).not.toThrowError();
+    });
 });
 
-it("should return undefined if a valid input is passed as an argument", () => {
-    const input = "1";
+describe("validateNumber()", () => {
+    it("should throw an error when passed an invalid input as argument", () => {
+        const input = "invalid";
+        const input2 = NaN;
 
-    const result = validateStringNotEmpty(input);
+        const resultFn = () => {
+            validateNumber(input);
+        };
 
-    expect(result).toBeUndefined();
-});
+        const resultFn2 = () => {
+            validateNumber(input2);
+        };
 
-it("should not throw an error if a valid input is passed as an argument", () => {
-    const input = "1";
+        expect(resultFn).toThrow(/Invalid number input/);
+        expect(resultFn2).toThrow(/Invalid number input/);
+    });
 
-    const resultFn = () => {
-        validateStringNotEmpty(input);
-    };
+    it("should not throw an error when passed a valid input as argument", () => {
+        const input = 1;
 
-    expect(resultFn).not.toThrowError();
-});
+        const resultFn = () => {
+            validateNumber(input);
+        };
 
-it("should throw an error when passed an invalid input as argument", () => {
-    const input = "invalid";
-    const input2 = NaN;
+        expect(resultFn).not.toThrow(/Invalid number input/);
+    });
 
-    const resultFn = () => {
-        validateNumber(input);
-    };
+    it("should throw an error if a non-numeric number is passed as a value", () => {
+        const input = "1";
 
-    const resultFn2 = () => {
-        validateNumber(input2);
-    };
+        const resultFn = () => {
+            validateNumber(input);
+        };
 
-    expect(resultFn).toThrow(/Invalid number input/);
-    expect(resultFn2).toThrow(/Invalid number input/);
-});
-
-it("should not throw an error when passed a valid input as argument", () => {
-    const input = 1;
-
-    const resultFn = () => {
-        validateNumber(input);
-    };
-
-    expect(resultFn).not.toThrow(/Invalid number input/);
-});
-
-it("should throw an error if a non-numeric number is passed as a value", () => {
-    const input = "1";
-
-    const resultFn = () => {
-        validateNumber(input);
-    };
-
-    expect(resultFn).toThrow(/Invalid number input/);
+        expect(resultFn).toThrow(/Invalid number input/);
+    });
 });
