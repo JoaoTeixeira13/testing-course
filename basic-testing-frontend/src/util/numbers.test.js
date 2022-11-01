@@ -1,6 +1,6 @@
 import { it, expect, describe } from "vitest";
 
-import { transformToNumber } from "./numbers";
+import { transformToNumber, cleanNumbers } from "./numbers";
 
 describe("transformToNumber()", () => {
     it("should transform and return a passed string number value as a number", () => {
@@ -59,5 +59,27 @@ describe("transformToNumber()", () => {
 
         //Assert (here we are setting the expected value dynamically)
         expect(result).toBe(0);
+    });
+});
+
+//integration test (function that calls other functions)
+
+describe("cleanNumbers()", () => {
+    it("should return an array of number values if an array of string number values is provided", () => {
+        const numberValues = ["1", "2"];
+
+        const cleanedNumbers = cleanNumbers(numberValues);
+
+        expect(cleanedNumbers[0]).toBeTypeOf("number");
+
+        expect(cleanedNumbers).toEqual([1, 2]);
+    });
+
+    it("should throw an error if an array with at least one empty string is provided", () => {
+        const numberValues = ["", 1];
+        const cleanFn = () => {
+            cleanNumbers(numberValues);
+        };
+        expect(cleanFn).toThrowError();
     });
 });
