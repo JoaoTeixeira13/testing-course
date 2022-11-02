@@ -23,6 +23,8 @@ describe("generateToken()", () => {
     it("should generate a  token value", () => {
         const testUserEmail = "test@test.com";
 
+        // .resolves || .rejects followed by the expected chained method
+
         return expect(
             generateTokenPromise(testUserEmail)
         ).resolves.toBeDefined();
