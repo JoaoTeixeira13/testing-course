@@ -1,47 +1,53 @@
-import { it, expect } from 'vitest';
+import { it, expect, beforeAll, beforeEach, afterEach, afterAll } from "vitest";
 
-import { User } from './hooks';
+import { User } from "./hooks";
 
-it('should update the email', () => {
-  const testEmail = 'test@test.com';
-  const newTestEmail = 'test2@test.com';
+const testEmail = "test@test.com";
+let user = new User(testEmail);
 
-  const user = new User(testEmail);
-  user.updateEmail(newTestEmail);
-
-  expect(user.email).toBe(newTestEmail);
+beforeAll(() => {
+    console.log("beforeAll()");
 });
 
-it('should have an email property', () => {
-  const testEmail = 'test@test.com';
+//resets user value before each test
 
-  const user = new User(testEmail);
-
-  expect(user).toHaveProperty('email');
+beforeEach(() => {
+    user = new User(testEmail);
 });
 
-it('should store the provided email value', () => {
-  const testEmail = 'test@test.com';
-
-  const user = new User(testEmail);
-
-  expect(user.email).toBe(testEmail);
+//resets user value after each test
+afterEach(() => {
+    user = new User(testEmail);
 });
 
-it('should clear the email', () => {
-  const testEmail = 'test@test.com';
-
-  const user = new User(testEmail);
-  user.clearEmail();
-
-  expect(user.email).toBe('');
+afterAll(() => {
+    console.log("afterAll()");
 });
 
-it('should still have an email property after clearing the email', () => {
-  const testEmail = 'test@test.com';
+it("should update the email", () => {
+    const newTestEmail = "test2@test.com";
 
-  const user = new User(testEmail);
-  user.clearEmail();
+    user.updateEmail(newTestEmail);
 
-  expect(user).toHaveProperty('email');
+    expect(user.email).toBe(newTestEmail);
+});
+
+it("should have an email property", () => {
+    expect(user).toHaveProperty("email");
+});
+
+it("should store the provided email value", () => {
+    expect(user.email).toBe(testEmail);
+});
+
+it("should clear the email", () => {
+    user.clearEmail();
+
+    expect(user.email).toBe("");
+});
+
+it("should still have an email property after clearing the email", () => {
+    user.clearEmail();
+
+    expect(user).toHaveProperty("email");
 });
